@@ -1,0 +1,45 @@
+Sub CalculateMetals()
+
+    Dim metals As Variant
+    Dim ingots As Variant
+    Dim vial As Integer
+    Dim tableArray As Variant
+    Dim calcTotal As Variant
+    Dim cellCalc As Variant
+
+    'Metal and ingot values from guide
+    metals = Array(13.5, 30, 80, 400, 1400, 23, 975, 115, 575, 293, 250, 550, 4500, 625, 210, 52.5)
+    ingots = Array(23.5, 52.5, 140, 700, 2450, 40, 1706, 201, 1006, 512.5, 437.5, 962.5, 7875, 1094, 367.5, 92)
+    vial = Sheet3.Range("E13").Value2
+    tableArray = Sheet3.Range("C3:D18").Value2
+    
+    calcTotal = 0
+    
+    'Loop through table, times by values in array and add to total
+    'Metal ores
+    For i = 1 To 16
+        If tableArray(i, 1) <> "" Then
+            cellCalc = tableArray(i, 1) * metals(i - 1)
+            calcTotal = calcTotal + cellCalc
+        End If
+    Next i
+    'Ingots
+    For i = 1 To 16
+        If tableArray(i, 2) <> "" Then
+            cellCalc = tableArray(i, 2) * ingots(i - 1)
+            calcTotal = calcTotal + cellCalc
+        End If
+    Next i
+    
+    calcTotal = calcTotal + (vial * 437.5)
+    
+    'Add large ingots
+    If Sheet4.IncludeMetals.Value = True Then
+        calcTotal = calcTotal + AddLarge("F")
+    End If
+    
+    Sheet3.Unprotect
+    Sheet3.Range("I4") = FormatCurrency(calcTotal)
+    Sheet3.Protect
+
+End Sub

@@ -1,0 +1,37 @@
+Sub CalculateGems()
+
+    Dim gems As Variant
+    Dim cuts As Variant
+    Dim tableArray As Variant
+    Dim calcTotal As Variant
+    Dim cellCalc As Variant
+    
+    'Gem and cut values from guide
+    gems = Array(15, 20, 25, 30, 47.5, 80, 150, 225, 575, 1425, 21, 44, 435, 32, 65, 21, 180, 14, 67.5, 200, 100, 1775, 400, 51, 287.5, 525, 615, 70)
+    cuts = Array(1, 1.25, 1.5, 1.75, 2, 2.3, 2.6, 3.5, 5, 2.4, 69, 10, 4, 3, 0, 5, 5)
+    
+    'Set table as array
+    tableArray = Sheet1.Range("C3:S30").Value2
+    
+    calcTotal = 0
+    
+    'Loop through table, times by values in array and add to total
+    For i = 1 To 28
+        For j = 1 To 17
+            If tableArray(i, j) <> "" Then
+                cellCalc = tableArray(i, j) * gems(i - 1) * cuts(j - 1)
+                calcTotal = calcTotal + cellCalc
+            End If
+        Next j
+    Next i
+    
+    'Add large gems
+    If Sheet4.IncludeGems.Value = True Then
+        calcTotal = calcTotal + AddLarge("C")
+    End If
+    
+    Sheet1.Unprotect
+    Sheet1.Range("W4") = FormatCurrency(calcTotal)
+    Sheet1.Protect
+    
+End Sub

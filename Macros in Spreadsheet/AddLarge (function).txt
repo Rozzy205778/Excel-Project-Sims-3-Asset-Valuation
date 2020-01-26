@@ -1,0 +1,22 @@
+Function AddLarge(column)
+
+    Dim rowTotal As Integer
+    Dim arrayLength As Integer
+    Dim largeValues As Variant
+    Dim functionTotal As Variant
+    
+    rowTotal = Sheet4.UsedRange.Rows.Count
+    If rowTotal = 4 Then rowTotal = rowTotal + 1
+    If rowTotal > 4 Then
+        largeValues = Sheet4.Range(column & "4:" & column & rowTotal).Value2
+        arrayLength = rowTotal - 3
+        For i = 1 To arrayLength
+            If largeValues(i, 1) <> "" Then
+                functionTotal = functionTotal + largeValues(i, 1)
+            End If
+        Next i
+    End If
+    
+    AddLarge = functionTotal
+    
+End Function

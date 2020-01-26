@@ -1,0 +1,30 @@
+Sub SetExpansions()
+    
+    'Unprotect the worksheets
+    Sheet1.Unprotect
+    Sheet3.Unprotect
+    
+    'Clear colour
+    Sheet1.Range("C3:S30").Interior.ColorIndex = 0
+    Sheet3.Range("C3:D18,E13").Interior.ColorIndex = 0
+
+    'Grey out expansions
+    If WorldAdventures.Value = False Then
+        Sheet1.Range("C13:S24,L3:O30").Interior.ColorIndex = 15
+        Sheet3.Range("C8:D15,E13").Interior.ColorIndex = 15
+    End If
+    If Ambitions.Value = False Then
+        Sheet1.Range("C25:S25,P3:P30").Interior.ColorIndex = 15
+        Sheet3.Range("C16:D16").Interior.ColorIndex = 15
+    End If
+    If LateNight.Value = False Then
+        Sheet1.Range("C26:S27").Interior.ColorIndex = 15
+        Sheet3.Range("C17:D18").Interior.ColorIndex = 15
+    End If
+    If Supernatural.Value = False Then Sheet1.Range("C28:S30,Q3:S30").Interior.ColorIndex = 15
+
+    'Protect the worksheets
+    Sheet1.Protect
+    Sheet3.Protect
+    
+End Sub
